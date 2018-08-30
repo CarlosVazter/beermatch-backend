@@ -11,7 +11,7 @@ const {
 } = require('./client.js');
 
 app.get('/', (req, res) => {
-    res.send(Cerveza.json());
+    res.send('Bienvenido a Beermatch');
 })
 
 app.get('/cerveza', (req, res) => {
@@ -33,5 +33,27 @@ app.get('/cerveza', (req, res) => {
     //})
 
 })
+
+// Creando una cerveza
+app.post('/api/v1/crearCerveza', (req, res) => {
+    const {nombre, estilo, cerveceria, imagen, sabor, color, precio} = req.body;
+    
+    let nuevaCerveza = Cerveza ({
+        nombre,
+        estilo,
+        cerveceria,
+        imagen,
+        sabor,
+        color,
+        precio
+    })
+
+    nuevaCerveza.save((req, cerveza) => {
+        res
+            .status(201)
+            .send(cerveza);
+    })
+})
+
 
 app.listen(6000, () => console.log('servidor funcionando'));
