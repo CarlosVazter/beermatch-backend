@@ -50,7 +50,10 @@ app.get('/api/v1/cervezas', (req, res) => {
             }
         })
     } else {
-        res.status(404).send('No tienes match')
+        // res.status(404).send('No tienes match')
+        Cerveza.find({}, (err, cervezas) => {
+            res.send(cervezas);
+        })
     }
 
 })
