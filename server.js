@@ -56,4 +56,4 @@ app.get('/api/v1/cervezas', (req, res) => {
 })
 
 
-app.listen(6000, () => console.log('servidor funcionando'));
+app.listen(3000, () => console.log('servidor funcionando'));
