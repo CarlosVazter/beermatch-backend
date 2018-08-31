@@ -14,25 +14,6 @@ app.get('/', (req, res) => {
     res.send('Bienvenido a Beermatch');
 })
 
-app.get('/cerveza', (req, res) => {
-    const {nombre, cerveceria, imagen, sabor, color, precio, estilo} = req.body
-    let nuevaCerveza = Cerveza({
-        nombre,
-        cerveceria,
-        imagen,
-        sabor,
-        color,
-        precio,
-        estilo
-    })
-
-    //app.get('/cerveza', (req, res) => {
-      //  Cerveza.find({}, (error, res) => {
-
-        //})
-    //})
-
-})
 
 // Creando una cerveza
 app.post('/api/v1/crearCerveza', (req, res) => {
@@ -53,6 +34,25 @@ app.post('/api/v1/crearCerveza', (req, res) => {
             .status(201)
             .send(cerveza);
     })
+})
+
+// Obteniendo las cervezas
+app.get('/api/v1/cervezas', (req, res) => {
+    let sabor = req.query.sabor;
+    let color = req.query.color;
+    
+    if (sabor && color) {
+        Cerveza.find({sabor: `${sabor}`, color:`${color}` }, (error, cerveza) => {
+            if (cerveza.length == 0) {
+                res.status(404).send('No hay cervezas que coincidan')
+            }else{
+                res.send(cerveza)
+            }
+        })
+    } else {
+        res.status(404).send('No tienes match')
+    }
+
 })
 
 
